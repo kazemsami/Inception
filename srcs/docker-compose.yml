@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  nginx:
+    build:
+      dockerfile: ./requirements/nginx/Dockerfile
+    volumes:
+      - ./requirements/wordpress/wordpress:/var/www/html
+    networks:
+      - wordpress
+    ports:
+      - '80:80'
+      - '443:443'
+  wordpress:
+    build:
+      dockerfile: ./requirements/wordpress/Dockerfile
+    volumes:
+      - ./requirements/wordpress/wordpress:/var/www/html
+    networks:
+      - wordpress
+    ports:
+      - '9000:9000'
+networks:
+  wordpress:
+    name: wp-wordpress
+    driver: bridge
