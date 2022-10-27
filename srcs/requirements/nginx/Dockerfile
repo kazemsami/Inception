@@ -1,6 +1,8 @@
 FROM debian:10
 
-RUN apt -y update && apt install -y nginx && apt upgrade -y openssl && mkdir /etc/nginx/certificates && \
+RUN apt -y update && apt install -y nginx && apt upgrade -y openssl
+
+RUN mkdir /etc/nginx/certificates && \
 	openssl req \
 		-x509 \
 		-newkey rsa:2048 \
@@ -12,6 +14,4 @@ RUN apt -y update && apt install -y nginx && apt upgrade -y openssl && mkdir /et
 
 COPY ./requirements/nginx/conf/default.conf /etc/nginx/sites-available/default
 
-EXPOSE 80 443
-
-CMD nginx -g 'daemon off;'
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

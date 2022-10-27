@@ -4,7 +4,7 @@ services:
     build:
       dockerfile: ./requirements/nginx/Dockerfile
     volumes:
-      - ./requirements/wordpress/wordpress:/var/www/html
+      - ./wordpress:/var/www/html
     networks:
       - wordpress
     ports:
@@ -14,7 +14,7 @@ services:
     build:
       dockerfile: ./requirements/wordpress/Dockerfile
     volumes:
-      - ./requirements/wordpress/wordpress:/var/www/html
+      - ./wordpress:/var/www/html
     networks:
       - wordpress
     ports:
