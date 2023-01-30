@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail
-user='www-data'
-group='www-data'
-echo >&2 "Copying wordpress..."
-tar --create --file - --directory /usr/src/wordpress --owner \
-"$user" --group "$group" . | tar --extract --file -
-echo >&2 "Successfully copied wordpress to volume"
 
-exec /usr/local/php7/sbin/php-fpm
+mkdir -p /var/www/html/wordpress
+
+cd /var/www/html/wordpress
+
+cp /tmp/wp-config.php .
+
+wp core download --force --allow-root
+
+wp core install --url='$WP_URL' --title='$WP_TITLE' --admin_user='$WP_ADMIN_USER' --admin_password='$WP_ADMIN_PASS' --admin_email='$WP_ADMIN_EMAIL' --allow-root
+
+wp user create kabusitt test123@gmail.com --role=author --user_pass=test123 --allow-root
+
+php-fpm7.3 -F

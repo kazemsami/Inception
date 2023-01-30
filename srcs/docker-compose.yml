@@ -4,22 +4,38 @@ services:
     build:
       dockerfile: ./requirements/nginx/Dockerfile
     volumes:
-      - ./wordpress:/var/www/html
-    networks:
-      - wordpress
+      - /Users/k/data:/var/www/html
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
+    networks:
+      - web
+    depends_on:
+      - wordpress
+    restart: always
   wordpress:
     build:
       dockerfile: ./requirements/wordpress/Dockerfile
     volumes:
-      - ./wordpress:/var/www/html
+      - /Users/k/data:/var/www/html
     networks:
-      - wordpress
+      - web
     ports:
-      - '9000:9000'
+      - "9000:9000"
+    depends_on:
+      - mariadb
+    restart: always
+  mariadb:
+    build:
+      dockerfile: ./requirements/mariadb/Dockerfile
+    volumes:
+      - /Users/k/data/mysql:/var/lib/mysql
+    networks:
+      - web
+    ports:
+      - "3306:3306"
+    restart: always
 networks:
-  wordpress:
+  web:
     name: wp-wordpress
     driver: bridge
