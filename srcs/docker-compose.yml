@@ -16,6 +16,8 @@ services:
   wordpress:
     build:
       dockerfile: ./requirements/wordpress/Dockerfile
+    env_file:
+      - ./.env
     volumes:
       - /Users/k/data:/var/www/html
     networks:
@@ -32,6 +34,8 @@ services:
       - /Users/k/data/mysql:/var/lib/mysql
     networks:
       - web
+    env_file:
+      - ./.env
     ports:
       - "3306:3306"
     restart: always

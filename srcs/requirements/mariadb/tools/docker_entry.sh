@@ -16,6 +16,8 @@ until mysqladmin ping >/dev/null 2>&1; do
 done
 
 mysql -u root -e "CREATE DATABASE wordpress;
-    GRANT ALL ON wordpress.* TO 'kabusitt'@'%' IDENTIFIED BY 'hello123'; FLUSH PRIVILEGES;"
+    ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASS';
+    GRANT ALL ON wordpress.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';
+    FLUSH PRIVILEGES;"
 
 wait $mysql_pid
