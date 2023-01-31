@@ -5,7 +5,7 @@ USER root
 RUN apt update && apt install -y \
 	wget \
 	curl \
-	mariadb-client \
+	sendmail \
 	php-mysql \
 	php \
 	php-fpm && \
