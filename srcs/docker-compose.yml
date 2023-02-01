@@ -3,6 +3,7 @@ services:
   nginx:
     build:
       dockerfile: ./requirements/nginx/Dockerfile
+    container_name: nginx
     volumes:
       - /Users/k/data:/var/www/html
     ports:
@@ -16,6 +17,7 @@ services:
   wordpress:
     build:
       dockerfile: ./requirements/wordpress/Dockerfile
+    container_name: wordpress
     env_file:
       - ./.env
     volumes:
@@ -30,6 +32,7 @@ services:
   mariadb:
     build:
       dockerfile: ./requirements/mariadb/Dockerfile
+    container_name: mariadb
     volumes:
       - /Users/k/data/mysql:/var/lib/mysql
     networks:
