@@ -4,6 +4,10 @@ mkdir -p /var/www/html/wordpress
 
 cd /var/www/html/wordpress
 
+sed -i 's/define( 'DB_NAME', 'wordpress' );/define( 'DB_NAME', '$DB_NAME' );/g' input.txt
+sed -i 's/define( 'DB_PASSWORD', 'hello123' );/define( 'DB_PASSWORD', '$DB_PASS' );/g' input.txt
+sed -i 's/define( 'DB_USER', 'kabusitt' );/define( 'DB_USER', '$DB_USER' );/g' input.txt
+
 cp /tmp/wp-config.php .
 
 wp core download --force --allow-root

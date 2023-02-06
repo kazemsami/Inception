@@ -34,7 +34,7 @@ services:
       dockerfile: ./requirements/mariadb/Dockerfile
     container_name: mariadb
     volumes:
-      - /Users/k/data/mysql:/var/lib/mysql
+      - /Users/k/data/mariadb:/var/lib/mysql
     networks:
       - web
     env_file:
