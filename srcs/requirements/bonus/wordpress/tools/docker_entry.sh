@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+mkdir -p /var/www/html/wordpress
+
 cd /var/www/html/wordpress
 
 cp /tmp/wp-config.php .
@@ -14,6 +16,8 @@ if ! wp core is-installed --allow-root --path=/var/www/html/wordpress; then
 wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email=$WP_ADMIN_EMAIL --allow-root
 wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASS --allow-root
 fi
+
+wp plugin install --activate redis-cache --allow-root
 
 echo "Installation done"
 

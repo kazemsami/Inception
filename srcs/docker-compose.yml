@@ -21,7 +21,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - wordpress:/var/www/html/wordpress
+      - wordpress:/var/www/html
     networks:
       - wordpress
       - database
@@ -53,11 +53,11 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/k/data/wordpress'
+      device: '/Users/${USER}/data'
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/k/data/mariadb'
+      device: '/Users/${USER}/data/mariadb'

@@ -21,4 +21,6 @@ COPY ./requirements/bonus/wordpress/tools/docker_entry.sh /usr/local/bin/
 
 COPY ./requirements/bonus/wordpress/conf/wp-config.php /tmp/
 
+COPY ./requirements/bonus/wordpress/tools/my_website /var/www/html/wordpress/my_website
+
 ENTRYPOINT ["docker_entry.sh"]
