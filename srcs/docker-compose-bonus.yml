@@ -52,7 +52,7 @@ services:
         - FTP_PASS=${FTP_PASS}
     container_name: vsftpd
     volumes:
-      - wordpress:/home/k
+      - wordpress:/home/${FTP_USER}
     env_file:
       - ./.env
     networks:

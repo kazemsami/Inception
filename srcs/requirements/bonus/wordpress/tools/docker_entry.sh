@@ -16,8 +16,5 @@ wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASS --allow-roo
 fi
 
 echo "Installation done"
-chown -R www-data:www-data /var/www
-chmod -R 775 $(find /var/www/html/wordpress -type d)
-chmod -R 664 $(find /var/www/html/wordpress -type f)
 
 php-fpm7.3 -F
