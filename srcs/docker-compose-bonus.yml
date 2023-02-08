@@ -2,7 +2,7 @@ version: "3.9"
 services:
   nginx:
     build:
-      dockerfile: ./requirements/nginx/Dockerfile
+      dockerfile: ./requirements/bonus/nginx/Dockerfile
     container_name: nginx
     volumes:
       - wordpress:/var/www/html
@@ -13,10 +13,11 @@ services:
       - wordpress
     depends_on:
       - wordpress
+      - mariadb
     restart: always
   wordpress:
     build:
-      dockerfile: ./requirements/wordpress/Dockerfile
+      dockerfile: ./requirements/bonus/wordpress/Dockerfile
     container_name: wordpress
     env_file:
       - ./.env
@@ -29,10 +30,10 @@ services:
       - "9000:9000"
     depends_on:
       - mariadb
-    restart: always
+    restart: on-failure
   mariadb:
     build:
-      dockerfile: ./requirements/mariadb/Dockerfile
+      dockerfile: ./requirements/bonus/mariadb/Dockerfile
     container_name: mariadb
     volumes:
       - mariadb:/var/lib/mysql
@@ -43,21 +44,42 @@ services:
     ports:
       - "3306:3306"
     restart: always
+  vsftpd:
+    build:
+      dockerfile: ./requirements/bonus/vsftpd/Dockerfile
+      args:
+        - FTP_USER=${FTP_USER}
+        - FTP_PASS=${FTP_PASS}
+    container_name: vsftpd
+    volumes:
+      - wordpress:/home/k
+    env_file:
+      - ./.env
+    networks:
+      - vsftpd
+    ports:
+      - "20:20"
+      - "21:21"
+      - "21100-21110:21100-21110"
+    depends_on:
+      - wordpress
+    restart: always
 networks:
-  database:
+  vsftpd:
   wordpress:
+  database:
 volumes:
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/Users/k/data/wordpress'
+      type: "none"
+      o: "bind"
+      device: "/Users/k/data/wordpress"
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/Users/k/data/mariadb'
+      type: "none"
+      o: "bind"
+      device: "/Users/k/data/mariadb"
