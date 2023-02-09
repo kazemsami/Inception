@@ -16,7 +16,7 @@ fclean: clean
 	docker rmi -f $$(docker images -a -q) 2> /dev/null || true
 	docker volume prune -f
 
-re: clean all
+re: fclean all
 
 bonus:
 	mkdir -p ${DIR}/data/mariadb
