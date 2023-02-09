@@ -23,4 +23,6 @@ COPY ./requirements/bonus/wordpress/conf/wp-config.php /tmp/
 
 COPY ./requirements/bonus/wordpress/tools/my_website /var/www/html/wordpress/my_website
 
+COPY ./requirements/bonus/wordpress/tools/adminer-4.8.1.php /var/www/html/wordpress/adminer.php
+
 ENTRYPOINT ["docker_entry.sh"]

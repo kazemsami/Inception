@@ -4,6 +4,7 @@ all: inception
 
 inception:
 	mkdir -p ${DIR}/data/mariadb
+	mkdir -p ${DIR}/data/wordpress
 	docker compose -f ./srcs/docker-compose.yml up --build -d
 
 clean:
@@ -19,4 +20,5 @@ re: clean all
 
 bonus:
 	mkdir -p ${DIR}/data/mariadb
+	mkdir -p ${DIR}/data/wordpress
 	docker compose -f ./srcs/docker-compose-bonus.yml up --build -d

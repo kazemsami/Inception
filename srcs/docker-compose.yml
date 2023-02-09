@@ -5,12 +5,12 @@ services:
       dockerfile: ./requirements/nginx/Dockerfile
     container_name: nginx
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wordpress
     ports:
       - "80:80"
       - "443:443"
     networks:
-      - wordpress
+      - web
     depends_on:
       - wordpress
     restart: always
@@ -21,10 +21,9 @@ services:
     env_file:
       - ./.env
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wordpress
     networks:
-      - wordpress
-      - database
+      - web
     ports:
       - "9000:9000"
     depends_on:
@@ -37,15 +36,14 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     networks:
-      - database
+      - web
     env_file:
       - ./.env
     ports:
       - "3306:3306"
     restart: always
 networks:
-  database:
-  wordpress:
+  web:
 volumes:
   wordpress:
     name: wordpress
@@ -53,7 +51,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/${USER}/data'
+      device: '/Users/${USER}/data/wordpress'
   mariadb:
     name: mariadb
     driver: local

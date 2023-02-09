@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-mkdir -p /var/www/html/wordpress
-
 cd /var/www/html/wordpress
 
 cp /tmp/wp-config.php .

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-mkdir -p /var/www/html/wordpress
-
 cd /var/www/html/wordpress
 
 cp /tmp/wp-config.php .
@@ -18,6 +16,10 @@ wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASS --allow-roo
 fi
 
 wp plugin install --activate redis-cache --allow-root
+wp redis enable --allow-root
+
+chmod -R 775 $(find /var/www/html -type d)
+chmod -R 664 $(find /var/www/html -type f)
 
 echo "Installation done"
 

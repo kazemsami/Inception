@@ -83,7 +83,8 @@ define( 'WP_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-
+define('WP_REDIS_HOST', 'redis');
+define('WP_CACHE_KEY_SALT', 'wp-docker-5DknvYepdjyJMo8gDqrLhrpAJUQ');
 
 /* That's all, stop editing! Happy publishing. */
 

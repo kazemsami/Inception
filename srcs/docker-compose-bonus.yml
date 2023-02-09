@@ -5,12 +5,12 @@ services:
       dockerfile: ./requirements/bonus/nginx/Dockerfile
     container_name: nginx
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wordpress
     ports:
       - "80:80"
       - "443:443"
     networks:
-      - wordpress
+      - web
     depends_on:
       - wordpress
       - mariadb
@@ -22,15 +22,14 @@ services:
     env_file:
       - ./.env
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html/wordpress
     networks:
-      - wordpress
-      - database
-      - redis
+      - web
     ports:
       - "9000:9000"
     depends_on:
       - mariadb
+      - redis
     restart: on-failure
   mariadb:
     build:
@@ -39,11 +38,25 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     networks:
-      - database
+      - web
     env_file:
       - ./.env
     ports:
       - "3306:3306"
+    restart: always
+  cadvisor:
+    build:
+      dockerfile: ./requirements/bonus/cadvisor/Dockerfile
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - web
+    ports:
+      - "8080:8080"
     restart: always
   vsftpd:
     build:
@@ -57,7 +70,7 @@ services:
     env_file:
       - ./.env
     networks:
-      - vsftpd
+      - web
     ports:
       - "20:20"
       - "21:21"
@@ -70,17 +83,12 @@ services:
       dockerfile: ./requirements/bonus/redis/Dockerfile
     container_name: redis
     networks:
-      - redis
+      - web
     ports:
       - "6379:6379"
-    depends_on:
-      - wordpress
     restart: always
 networks:
-  redis:
-  vsftpd:
-  wordpress:
-  database:
+  web:
 volumes:
   wordpress:
     name: wordpress
@@ -88,7 +96,7 @@ volumes:
     driver_opts:
       type: "none"
       o: "bind"
-      device: "/Users/${USER}/data"
+      device: "/Users/${USER}/data/wordpress"
   mariadb:
     name: mariadb
     driver: local
