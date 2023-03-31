@@ -26,4 +26,4 @@ $ make
 ### Usage
 To view the website, you can either enter `localhost` in your browser or link 127.0.0.1 to `kabusitt.42.fr` by adding the line `127.0.0.1 kabusitt.42.fr` to your `/etc/hosts` file using your favorite editor. Additionally, you can customize the link by modifying the `.env` file and changing "kabusitt" to your own intra login.
 
-# I know that .env is not supposed to be uploaded to github but this is just for learning purposes.
+# The .env file is included in this repository for learning purposes.
